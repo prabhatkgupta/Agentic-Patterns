@@ -87,18 +87,18 @@ def decision_node(state: ReflectionState) -> str:
 	max_iterations = state["max_iterations"]
 	if feedback == "" or max_iterations > 3:
 		return "end"
-	return "llm_node"
+	return "feedback"
 
 
 
 def main():
 	graph = StateGraph(ReflectionState)
-	graph.add_node("llm_node", llm_node)
-	graph.add_node("provide_feedback", provide_feedback)
-	graph.add_edge(START, "llm_node")
-	graph.add_edge("llm_node", "provide_feedback")
-	graph.add_conditional_edges("provide_feedback", decision_node, {
-        "llm_node": "llm_node",
+	graph.add_node("Answer Generator", llm_node)
+	graph.add_node("Reflector", provide_feedback)
+	graph.add_edge(START, "Answer Generator")
+	graph.add_edge("Answer Generator", "Reflector")
+	graph.add_conditional_edges("Reflector", decision_node, {
+        "feedback": "Answer Generator",
         "end": END
     })
 
@@ -110,7 +110,7 @@ def main():
 
 
 	example = ReflectionState({
-			"query": "What is the capital of Abu Dhabi",
+			"query": "What is the capital of UAE ?",
 			"feedback": None,
 			"messages": [], 
 			"answer": None,
