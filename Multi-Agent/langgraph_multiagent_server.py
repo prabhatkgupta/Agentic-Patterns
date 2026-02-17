@@ -6,7 +6,7 @@ load_dotenv()
 
 mcp = FastMCP("multi-agent")
 client = OpenAI()
-model = "azure/gpt-4o"
+model = "anthropic/claude-sonnet-4-5"
 
 @mcp.tool()
 def question_answering_tool(question: str) -> str:

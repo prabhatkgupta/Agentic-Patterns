@@ -7,7 +7,7 @@ from typing import Optional, TypedDict, Annotated
 load_dotenv()
 
 client = OpenAI()
-model = "azure/gpt-4o"
+model = "anthropic/claude-sonnet-4-5"
 
 
 class ReflectionState(TypedDict):
